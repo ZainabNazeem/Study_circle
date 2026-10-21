@@ -21,4 +21,6 @@ asking academic questions, and forming study groups.
 4. Open `http://localhost/studycircle/`.
 
 ## Team
-- Add member names and roles here
+1. MNF. Zainab (42146)
+2. ARF. Nufna (41865)
+3. J. Jeyatharani (41993)
