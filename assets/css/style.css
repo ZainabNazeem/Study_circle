@@ -1,0 +1,13 @@
+body {
+  background-color: #f4f6f9;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  transition: 0.2s;
+}
