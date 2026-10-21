@@ -1,3 +1,4 @@
 <?php
-echo "StudyCircle is working!";
+include "config/db.php";
+echo "StudyCircle is working! Database connected.";
 ?>
