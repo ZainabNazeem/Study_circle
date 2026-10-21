@@ -53,5 +53,20 @@ if (isset($_POST['register'])) {
     <button type="submit" name="register">Register</button>
   </form>
   <p>Already have an account? <a href="login.php">Login</a></p>
+
+  <script>
+  document.querySelector("form").addEventListener("submit", function (e) {
+    var password = document.querySelector("[name=password]").value;
+    var confirm = document.querySelector("[name=confirm_password]").value;
+
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters.");
+      e.preventDefault();
+    } else if (password != confirm) {
+      alert("Passwords do not match.");
+      e.preventDefault();
+    }
+  });
+  </script>
 </body>
 </html>
