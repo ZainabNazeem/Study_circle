@@ -16,9 +16,12 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-nsbm">
 <div class="container">
-    <a class="navbar-brand" href="/studycircle/index.php">StudyCircle</a>
+    <a class="navbar-brand d-flex align-items-center" href="/studycircle/index.php">
+    <img src="/studycircle/assets/images/nsbm-logo.png" alt="NSBM Green University" height="38" class="logo-box me-2">
+    StudyCircle
+    </a>    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-      <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="menu">
       <ul class="navbar-nav ms-auto">

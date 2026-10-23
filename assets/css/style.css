@@ -53,3 +53,9 @@ a {
   background-color: var(--nsbm-blue);
   color: white;
 }
+
+.logo-box {
+  background: white;
+  border-radius: 6px;
+  padding: 3px 6px;
+}
