@@ -4,6 +4,7 @@ include "../config/db.php";
 requireAdmin();
 
 $message = "";
+$messageType = "success";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
@@ -14,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'add') {
         if ($name === '') {
             $message = "Subject name cannot be empty.";
+            $messageType = "danger";
         } else {
             $stmt = mysqli_prepare($conn, "INSERT INTO subjects (name) VALUES (?)");
             mysqli_stmt_bind_param($stmt, "s", $name);
@@ -26,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'update') {
         if ($name === '') {
             $message = "Subject name cannot be empty.";
+            $messageType = "danger";
         } else {
             $stmt = mysqli_prepare($conn, "UPDATE subjects SET name=? WHERE id=?");
             mysqli_stmt_bind_param($stmt, "si", $name, $id);
@@ -55,56 +58,86 @@ if (isset($_GET['edit'])) {
 
 // READ
 $subjects = mysqli_query($conn, "SELECT id, name FROM subjects ORDER BY name");
+
+$page_title = "Manage Subjects - StudyCircle";
+include "../includes/header.php";
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Manage Subjects</title>
-</head>
-<body>
-  <h2>Manage Subjects</h2>
-  <p><a href="dashboard.php">Back to Dashboard</a> | <a href="users.php">Manage Users</a></p>
+<style>
+  .admin-card { border-top: 4px solid var(--nsbm-green); }
+</style>
+
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Manage Subjects</h2>
+    <div>
+      <a href="users.php" class="btn btn-outline-primary btn-sm">Manage Users</a>
+      <a href="dashboard.php" class="btn btn-outline-secondary btn-sm">Back to Dashboard</a>
+    </div>
+  </div>
 
   <?php if ($message): ?>
-    <p><strong><?php echo htmlspecialchars($message); ?></strong></p>
+    <div class="alert alert-<?php echo $messageType; ?>"><?php echo htmlspecialchars($message); ?></div>
   <?php endif; ?>
 
-  <?php if ($editSubject): ?>
-    <h3>Edit subject</h3>
-    <form method="post" action="subjects.php">
-      <input type="hidden" name="action" value="update">
-      <input type="hidden" name="id" value="<?php echo (int)$editSubject['id']; ?>">
-      <input type="text" name="name" value="<?php echo htmlspecialchars($editSubject['name']); ?>" required>
-      <button type="submit">Save</button>
-      <a href="subjects.php">Cancel</a>
-    </form>
-  <?php else: ?>
-    <h3>Add subject</h3>
-    <form method="post" action="subjects.php">
-      <input type="hidden" name="action" value="add">
-      <input type="text" name="name" placeholder="e.g. Web Development" required>
-      <button type="submit">Add</button>
-    </form>
-  <?php endif; ?>
-  <hr>
+  <div class="card admin-card mb-4">
+    <div class="card-body">
+      <?php if ($editSubject): ?>
+        <h5 class="card-title">Edit subject</h5>
+        <form method="post" action="subjects.php" class="row g-2">
+          <input type="hidden" name="action" value="update">
+          <input type="hidden" name="id" value="<?php echo (int)$editSubject['id']; ?>">
+          <div class="col-md-8">
+            <input type="text" name="name" class="form-control"
+                   value="<?php echo htmlspecialchars($editSubject['name']); ?>" required>
+          </div>
+          <div class="col-md-4">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="subjects.php" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      <?php else: ?>
+        <h5 class="card-title">Add subject</h5>
+        <form method="post" action="subjects.php" class="row g-2">
+          <input type="hidden" name="action" value="add">
+          <div class="col-md-8">
+            <input type="text" name="name" class="form-control" placeholder="e.g. Web Development" required>
+          </div>
+          <div class="col-md-4">
+            <button type="submit" class="btn btn-primary">Add</button>
+          </div>
+        </form>
+      <?php endif; ?>
+    </div>
+  </div>
 
-  <table border="1" cellpadding="6" cellspacing="0">
-    <tr><th>ID</th><th>Name</th><th>Actions</th></tr>
-    <?php while ($s = mysqli_fetch_assoc($subjects)): ?>
-      <tr>
-        <td><?php echo (int)$s['id']; ?></td>
-        <td><?php echo htmlspecialchars($s['name']); ?></td>
-        <td>
-          <a href="subjects.php?edit=<?php echo (int)$s['id']; ?>">Edit</a>
-          <form method="post" action="subjects.php" style="display:inline"
-                onsubmit="return confirm('Delete this subject? Notes and questions under it will also be deleted.');">
-            <input type="hidden" name="action" value="delete">
-            <input type="hidden" name="id" value="<?php echo (int)$s['id']; ?>">
-            <button type="submit">Delete</button>
-          </form>
-        </td>
-      </tr>
-    <?php endwhile; ?>
-  </table>
-</body>
-</html>
+  <div class="card admin-card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr><th>ID</th><th>Name</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+            <?php while ($s = mysqli_fetch_assoc($subjects)): ?>
+              <tr>
+                <td><?php echo (int)$s['id']; ?></td>
+                <td><?php echo htmlspecialchars($s['name']); ?></td>
+                <td>
+                  <a href="subjects.php?edit=<?php echo (int)$s['id']; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
+                  <form method="post" action="subjects.php" class="d-inline"
+                        onsubmit="return confirm('Delete this subject? Notes and questions under it will also be deleted.');">
+                    <input type="hidden" name="action" value="delete">
+                    <input type="hidden" name="id" value="<?php echo (int)$s['id']; ?>">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                  </form>
+                </td>
+              </tr>
+            <?php endwhile; ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php include "../includes/footer.php"; ?>
