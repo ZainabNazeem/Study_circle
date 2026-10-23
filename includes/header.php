@@ -14,8 +14,8 @@ if (session_status() === PHP_SESSION_NONE) {
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-nsbm">
+<div class="container">
     <a class="navbar-brand" href="/studycircle/index.php">StudyCircle</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
       <span class="navbar-toggler-icon"></span>
