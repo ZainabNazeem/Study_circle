@@ -56,7 +56,40 @@ if (isset($_GET['edit'])) {
 }
 
 // READ
-$users = mysqli_query($conn, "SELECT id, full_name, email, role, status, created_at FROM users ORDER BY id");
+// SEARCH + FILTER
+$q = trim($_GET['q'] ?? '');
+$roleFilter = $_GET['role'] ?? '';
+$statusFilter = $_GET['status'] ?? '';
+
+$sql = "SELECT id, full_name, email, role, status, created_at FROM users WHERE 1=1";
+$types = "";
+$params = [];
+
+if ($q !== '') {
+    $sql .= " AND (full_name LIKE ? OR email LIKE ?)";
+    $like = "%" . $q . "%";
+    $types .= "ss";
+    $params[] = $like;
+    $params[] = $like;
+}
+if (in_array($roleFilter, ['admin', 'student'])) {
+    $sql .= " AND role=?";
+    $types .= "s";
+    $params[] = $roleFilter;
+}
+if (in_array($statusFilter, ['active', 'blocked'])) {
+    $sql .= " AND status=?";
+    $types .= "s";
+    $params[] = $statusFilter;
+}
+$sql .= " ORDER BY id";
+
+$stmt = mysqli_prepare($conn, $sql);
+if ($params) {
+    mysqli_stmt_bind_param($stmt, $types, ...$params);
+}
+mysqli_stmt_execute($stmt);
+$users = mysqli_stmt_get_result($stmt);
 
 $page_title = "Manage Users - StudyCircle";
 include "../includes/header.php";
@@ -116,6 +149,35 @@ include "../includes/header.php";
     </div>
   <?php endif; ?>
 
+  <div class="card admin-card mb-4">
+    <div class="card-body">
+      <form method="get" action="users.php" class="row g-2">
+        <div class="col-md-5">
+          <input type="text" name="q" class="form-control" placeholder="Search name or email..."
+                 value="<?php echo htmlspecialchars($q); ?>">
+        </div>
+        <div class="col-md-2">
+          <select name="role" class="form-select">
+            <option value="">All roles</option>
+            <option value="admin" <?php if ($roleFilter === 'admin') echo 'selected'; ?>>admin</option>
+            <option value="student" <?php if ($roleFilter === 'student') echo 'selected'; ?>>student</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <select name="status" class="form-select">
+            <option value="">All status</option>
+            <option value="active" <?php if ($statusFilter === 'active') echo 'selected'; ?>>active</option>
+            <option value="blocked" <?php if ($statusFilter === 'blocked') echo 'selected'; ?>>blocked</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-primary">Search</button>
+          <a href="users.php" class="btn btn-outline-secondary">Reset</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div class="card admin-card">
     <div class="card-body">
       <div class="table-responsive">
@@ -155,6 +217,9 @@ include "../includes/header.php";
                 </td>
               </tr>
             <?php endwhile; ?>
+            <?php if (mysqli_num_rows($users) === 0): ?>
+              <tr><td colspan="7" class="text-center text-muted">No users found.</td></tr>
+            <?php endif; ?>
           </tbody>
         </table>
       </div>
