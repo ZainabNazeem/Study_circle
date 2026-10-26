@@ -28,7 +28,7 @@ include "../includes/header.php";
       <div class="card dashboard-card p-3">
         <h5>Approve Materials</h5>
         <p>Approve or reject uploaded notes.</p>
-        <a href="#" class="btn btn-primary">Open</a>
+        <a href="approvematerials.php" class="btn btn-primary">Open</a>
       </div>
     </div>
     <div class="col-md-4">
