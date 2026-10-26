@@ -1,7 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+
 include '../config/db.php';
 include '../includes/auth.php';
 requireAdmin();
@@ -85,7 +83,7 @@ include '../includes/header.php';
                 <button name="action" value="approved" class="btn btn-success btn-sm">Approve</button>
               <?php } ?>
               <?php if ($status != 'rejected') { ?>
-                <button name="action" value="rejected" class="btn btn-danger btn-sm">Reject</button>
+                <button name="action" value="rejected" class="btn btn-danger btn-sm" onclick="return confirm('Reject this material?');">Reject</button>
               <?php } ?>
             </form>
           </td>
