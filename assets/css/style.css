@@ -1,0 +1,65 @@
+:root {
+  --nsbm-blue: #1B5BA0;
+  --nsbm-green: #3CB44B;
+  --nsbm-lime: #8DC63F;
+  --nsbm-light: #F2F7F3;
+}
+
+body {
+  background-color: var(--nsbm-light);
+}
+
+h1, h2, h3, h4, h5 {
+  color: var(--nsbm-blue);
+}
+
+a {
+  color: var(--nsbm-blue);
+}
+
+/* Top menu bar */
+.navbar-nsbm {
+  background-color: var(--nsbm-blue);
+  border-bottom: 4px solid var(--nsbm-green);
+}
+
+/* Green buttons */
+.btn-primary {
+  --bs-btn-bg: var(--nsbm-green);
+  --bs-btn-border-color: var(--nsbm-green);
+  --bs-btn-hover-bg: #2F9A3D;
+  --bs-btn-hover-border-color: #2F9A3D;
+  --bs-btn-active-bg: #2A8A37;
+  --bs-btn-active-border-color: #2A8A37;
+}
+
+/* Cards */
+.card {
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card {
+  border-top: 4px solid var(--nsbm-green);
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  transition: 0.2s;
+}
+
+/* Footer */
+.site-footer {
+  background-color: var(--nsbm-blue);
+  color: white;
+}
+
+.logo-box {
+  background: white;
+  border-radius: 6px;
+  padding: 3px 6px;
+}
+
+.hero {
+  padding: 50px 0 30px 0;
+}
