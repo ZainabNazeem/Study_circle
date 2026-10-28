@@ -35,7 +35,7 @@ include "../includes/header.php";
       <div class="card dashboard-card p-3">
         <h5>Study Groups</h5>
         <p>Create or join a group.</p>
-        <a href="#" class="btn btn-primary">Open</a>
+        <a href="/studycircle/student/groups.php" class="btn btn-primary">Open</a>
       </div>
     </div>
   </div>
