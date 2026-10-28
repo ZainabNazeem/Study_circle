@@ -1,90 +1,105 @@
 <?php
-session_start();
-require_once '../config/db.php';
+include "../includes/auth.php";
+include "../config/db.php";
+requireLogin();
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../auth/login.php");
-    exit();
-}
+$message = "";
+$message_type = "success";
 
-$message = '';
-
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $group_id = $_POST['group_id'];
+    $group_id = (int)$_POST['group_id'];
     $session_title = trim($_POST['session_title']);
     $session_date = $_POST['session_date'];
     $session_time = $_POST['session_time'];
 
-    if (!empty($group_id) && !empty($session_title) && !empty($session_date) && !empty($session_time)) {
+    if ($group_id > 0 && $session_title != "" && $session_date != "" && $session_time != "") {
         $stmt = $conn->prepare("INSERT INTO study_sessions (group_id, topic, session_date, session_time) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("isss", $group_id, $session_title, $session_date, $session_time);
-        
+
         if ($stmt->execute()) {
-            $message = "<div style='color: green;'>Study Session scheduled successfully!</div>";
+            $message = "Study session scheduled successfully!";
         } else {
-            $message = "<div style='color: red;'>Error scheduling session.</div>";
+            $message = "Error scheduling session.";
+            $message_type = "danger";
         }
     } else {
-        $message = "<div style='color: red;'>Please fill in all fields.</div>";
+        $message = "Please fill in all fields.";
+        $message_type = "danger";
     }
 }
 
-// Fetch groups
-$groups_result = $conn->query("SELECT * FROM study_groups");
+$groups_result = $conn->query("SELECT id, name FROM study_groups ORDER BY name");
 
-// Fetch scheduled sessions
-$sessions_result = $conn->query("SELECT s.*, g.name AS group_name FROM study_sessions s JOIN study_groups g ON s.group_id = g.id ORDER BY s.session_date ASC");
+$sessions_result = $conn->query("SELECT s.*, g.name AS group_name FROM study_sessions s JOIN study_groups g ON s.group_id = g.id ORDER BY s.session_date ASC, s.session_time ASC");
+
+$page_title = "Schedule Session";
+include "../includes/header.php";
 ?>
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Schedule Study Session</title>
-</head>
-<body>
-    <h2>Schedule a Study Session</h2>
-    <?php echo $message; ?>
-    
-    <form action="schedule_session.php" method="POST">
-        <label for="group_id">Select Group:</label><br>
-        <select name="group_id" id="group_id" required>
-            <option value="">-- Choose Group --</option>
-            <?php while ($group = $groups_result->fetch_assoc()): ?>
-                <option value="<?php echo $group['id']; ?>"><?php echo htmlspecialchars($group['name']); ?></option>            <?php endwhile; ?>
-        </select><br><br>
+<div class="container mt-4">
+  <h2>Schedule a Study Session</h2>
 
-        <label for="session_title">Session Title:</label><br>
-        <input type="text" id="session_title" name="session_title" required><br><br>
+  <?php if ($message != "") { ?>
+    <div class="alert alert-<?php echo $message_type; ?>"><?php echo $message; ?></div>
+  <?php } ?>
 
-        <label for="session_date">Date:</label><br>
-        <input type="date" id="session_date" name="session_date" required><br><br>
+  <div class="card p-4 mb-4">
+    <form method="POST">
+      <div class="mb-3">
+        <label class="form-label">Select group</label>
+        <select name="group_id" class="form-select" required>
+          <option value="">-- Choose Group --</option>
+          <?php while ($group = $groups_result->fetch_assoc()) { ?>
+            <option value="<?php echo $group['id']; ?>"><?php echo htmlspecialchars($group['name']); ?></option>
+          <?php } ?>
+        </select>
+      </div>
 
-        <label for="session_time">Time:</label><br>
-        <input type="time" id="session_time" name="session_time" required><br><br>
+      <div class="mb-3">
+        <label class="form-label">Session title</label>
+        <input type="text" name="session_title" class="form-control" required>
+      </div>
 
-        <button type="submit">Schedule Session</button>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Date</label>
+          <input type="date" name="session_date" id="session_date" class="form-control" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Time</label>
+          <input type="time" name="session_time" class="form-control" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Schedule Session</button>
+      <a href="groups.php" class="btn btn-outline-secondary">Back to Groups</a>
     </form>
+  </div>
 
-    <br><hr><br>
-
-    <h3>Scheduled Sessions</h3>
-    <table border="1" cellpadding="10" cellspacing="0">
+  <h3>Scheduled Sessions</h3>
+  <table class="table table-bordered table-hover bg-white">
+    <thead>
+      <tr><th>Group</th><th>Title</th><th>Date</th><th>Time</th></tr>
+    </thead>
+    <tbody>
+      <?php if ($sessions_result->num_rows == 0) { ?>
+        <tr><td colspan="4" class="text-center">No sessions scheduled yet.</td></tr>
+      <?php } ?>
+      <?php while ($session = $sessions_result->fetch_assoc()) { ?>
         <tr>
-            <th>Group</th>
-            <th>Title</th>
-            <th>Date & Time</th>
+          <td><?php echo htmlspecialchars($session['group_name']); ?></td>
+          <td><?php echo htmlspecialchars($session['topic']); ?></td>
+          <td><?php echo $session['session_date']; ?></td>
+          <td><?php echo substr($session['session_time'], 0, 5); ?></td>
         </tr>
-        <?php while ($session = $sessions_result->fetch_assoc()): ?>
-        <tr>
-            <td><?php echo htmlspecialchars($session['group_name']); ?></td>
-            <td><?php echo htmlspecialchars($session['topic']); ?></td>
-            <td><?php echo $session['session_date'] . " " . $session['session_time']; ?></td>
-        </tr>
-        <?php endwhile; ?>
-    </table>
+      <?php } ?>
+    </tbody>
+  </table>
+</div>
 
-    <br>
-    <a href="groups.php">Back to Groups</a>
-</body>
-</html>
+<script>
+// Do not allow dates in the past
+document.getElementById("session_date").min = new Date().toISOString().split("T")[0];
+</script>
+
+<?php include "../includes/footer.php"; ?>

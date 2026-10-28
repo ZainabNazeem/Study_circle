@@ -1,53 +1,62 @@
 <?php
-session_start();
-require_once '../config/db.php';
+include "../includes/auth.php";
+include "../config/db.php";
+requireLogin();
 
-// Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../auth/login.php");
-    exit();
-}
-
-$message = '';
+$message = "";
+$message_type = "success";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $group_name = trim($_POST['group_name']);
     $user_id = $_SESSION['user_id'];
 
-    if (!empty($group_name)) {
+    if ($group_name != "") {
         $stmt = $conn->prepare("INSERT INTO study_groups (name, created_by) VALUES (?, ?)");
         $stmt->bind_param("si", $group_name, $user_id);
-        
+
         if ($stmt->execute()) {
+            // The creator joins their own group automatically
             $new_group_id = $conn->insert_id;
             $member = $conn->prepare("INSERT INTO group_members (group_id, user_id) VALUES (?, ?)");
             $member->bind_param("ii", $new_group_id, $user_id);
             $member->execute();
-            $message = "<div style='color: green;'>Study Group created successfully!</div>";
+
+            $message = "Study group created successfully!";
         } else {
-            $message = "<div style='color: red;'>Error creating group.</div>";
+            $message = "Error creating group.";
+            $message_type = "danger";
         }
     } else {
-        $message = "<div style='color: red;'>Please enter a group name.</div>";
+        $message = "Please enter a group name.";
+        $message_type = "danger";
     }
 }
+
+$page_title = "Create Group";
+include "../includes/header.php";
 ?>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create Study Group</title>
-</head>
-<body>
-    <h2>Create a New Study Group</h2>
-    <?php echo $message; ?>
-    
-    <form action="create_group.php" method="POST">
-        <label for="group_name">Group Name:</label><br>
-        <input type="text" id="group_name" name="group_name" required><br><br>
-        
-        <button type="submit">Create Group</button>
-    </form>
-    <br>
-    <a href="groups.php">View All Groups</a>
-</body>
-</html>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card p-4">
+        <h3>Create a New Study Group</h3>
+
+        <?php if ($message != "") { ?>
+          <div class="alert alert-<?php echo $message_type; ?>"><?php echo $message; ?></div>
+        <?php } ?>
+
+        <form method="POST">
+          <div class="mb-3">
+            <label class="form-label">Group name</label>
+            <input type="text" name="group_name" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Create Group</button>
+          <a href="groups.php" class="btn btn-outline-secondary">View All Groups</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php include "../includes/footer.php"; ?>
