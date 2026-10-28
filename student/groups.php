@@ -35,7 +35,7 @@ if (isset($_POST['join_group_id'])) {
 }
 
 // Fetch all study groups
-$groups_result = $conn->query("SELECT * FROM StudyGroups");
+$groups_result = $conn->query("SELECT * FROM study_groups");
 ?>
 
 
@@ -48,8 +48,10 @@ $groups_result = $conn->query("SELECT * FROM StudyGroups");
     <h2>Available Study Groups</h2>
     <?php echo $message; ?>
     
-    <p><a href="create_group.php">Create a New Study Group</a></p>
-    
+    <p>
+        <a href="create_group.php">Create a New Study Group</a> |
+        <a href="schedule_session.php">Schedule a Study Session</a>
+    </p>    
     <table border="1" cellpadding="10" cellspacing="0">
         <tr>
             <th>Group Name</th>
@@ -57,7 +59,7 @@ $groups_result = $conn->query("SELECT * FROM StudyGroups");
         </tr>
         <?php while ($group = $groups_result->fetch_assoc()): ?>
         <tr>
-            <td><?php echo htmlspecialchars($group['group_name']); ?></td>
+            <td><?php echo htmlspecialchars($group['name']); ?></td></td>
             <td>
                 <form action="groups.php" method="POST" style="margin: 0;">
                     <input type="hidden" name="join_group_id" value="<?php echo $group['id']; ?>">
