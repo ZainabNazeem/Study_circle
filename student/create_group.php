@@ -15,10 +15,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_id = $_SESSION['user_id'];
 
     if (!empty($group_name)) {
-        $stmt = $conn->prepare("INSERT INTO StudyGroups (group_name, creator_user_id) VALUES (?, ?)");
+        $stmt = $conn->prepare("INSERT INTO study_groups (name, created_by) VALUES (?, ?)");
         $stmt->bind_param("si", $group_name, $user_id);
         
         if ($stmt->execute()) {
+            $new_group_id = $conn->insert_id;
+            $member = $conn->prepare("INSERT INTO group_members (group_id, user_id) VALUES (?, ?)");
+            $member->bind_param("ii", $new_group_id, $user_id);
+            $member->execute();
             $message = "<div style='color: green;'>Study Group created successfully!</div>";
         } else {
             $message = "<div style='color: red;'>Error creating group.</div>";
