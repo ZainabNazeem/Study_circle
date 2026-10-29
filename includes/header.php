@@ -26,6 +26,9 @@ if (session_status() === PHP_SESSION_NONE) {
     <div class="collapse navbar-collapse" id="menu">
       <ul class="navbar-nav ms-auto">
 
+        <li class="nav-item"><a class="nav-link" href="/studycircle/about.php">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="/studycircle/contact.php">Contact</a></li>
+
         <?php if (!isset($_SESSION['user_id'])) { ?>
           <li class="nav-item"><a class="nav-link" href="/studycircle/auth/login.php">Login</a></li>
           <li class="nav-item"><a class="nav-link" href="/studycircle/auth/register.php">Register</a></li>
@@ -43,3 +46,4 @@ if (session_status() === PHP_SESSION_NONE) {
     </div>
   </div>
 </nav>
+

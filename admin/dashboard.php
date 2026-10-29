@@ -45,6 +45,13 @@ include "../includes/header.php";
         <a href="#" class="btn btn-primary">Open</a>
       </div>
     </div>
+    <div class="col-md-4">
+      <div class="card dashboard-card p-3">
+        <h5>Contact Messages</h5>
+        <p>Read messages sent from the Contact Us page.</p>
+        <a href="/studycircle/admin/messages.php" class="btn btn-primary">Open</a>
+      </div>
+    </div>
   </div>
 </div>
 
