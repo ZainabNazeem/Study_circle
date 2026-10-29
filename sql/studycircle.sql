@@ -25,6 +25,7 @@ CREATE TABLE materials (
   description TEXT,
   file_name VARCHAR(255) NOT NULL,
   status ENUM('pending','approved','rejected') DEFAULT 'pending',
+  downloads INT DEFAULT 0,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE
