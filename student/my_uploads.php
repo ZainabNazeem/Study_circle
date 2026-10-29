@@ -33,6 +33,7 @@ include "../includes/header.php";
 
     <a href="upload.php" class="btn btn-primary mb-3">Upload New Notes</a>
 
+
     <?php if (mysqli_num_rows($result) > 0): ?>
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
