@@ -63,3 +63,11 @@ a {
 .hero {
   padding: 50px 0 30px 0;
 }
+.site-footer{
+  margin-top:auto !important;
+}
+body{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
