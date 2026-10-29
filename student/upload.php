@@ -85,7 +85,7 @@ include "../includes/header.php";
 ?>
 
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>Upload Notes</h2>
         <a href="my_uploads.php" class="btn btn-outline-primary">My Uploaded Notes</a>
     </div>
