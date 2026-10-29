@@ -35,7 +35,7 @@ include "../includes/header.php";
       <div class="card dashboard-card p-3">
         <h5>Moderate Forum</h5>
         <p>Review questions and answers.</p>
-        <a href="#" class="btn btn-primary">Open</a>
+        <a href="/studycircle/admin/moderate_qa.php" class="btn btn-primary">Open</a>
       </div>
     </div>
     <div class="col-md-4">
