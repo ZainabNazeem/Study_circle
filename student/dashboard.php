@@ -14,7 +14,8 @@ include "../includes/header.php";
       <div class="card dashboard-card p-3">
         <h5>Upload Notes</h5>
         <p>Share your study materials.</p>
-        <a href="#" class="btn btn-primary">Open</a>
+        <a href="upload.php" class="btn btn-primary">Open</a>
+        <a href="my_uploads.php" class="btn btn-outline-primary mt-2">My Uploaded Notes</a>
       </div>
     </div>
     <div class="col-md-4">
