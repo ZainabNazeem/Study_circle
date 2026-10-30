@@ -129,3 +129,41 @@ body {
   background: linear-gradient(rgba(27, 91, 160, 0.30), rgba(27, 91, 160, 0.30)),
               url('/studycircle/assets/images/bg-home.jpg') center / cover no-repeat fixed !important;
 }
+
+.content-box {
+    background-color: rgba(255, 255, 255, 0.80); /* White box */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Shadow */
+    padding: 30px; /* Space inside the box */
+    margin-top: 30px;
+    margin-bottom: 30px;
+    min-height: 75vh; /* Pushes the footer to the bottom on short pages */
+}
+
+/* Make headings inside the white box dark and readable */
+.content-box h1, 
+.content-box h2, 
+.content-box h3, 
+.content-box h4, 
+.content-box h5 {
+    color: #0d3b66 !important; /* NSBM Dark Blue (or use #333 for black) */
+    text-shadow: none !important; /* Removes the white shadow */
+}
+
+/* Force all text inside the box to be dark and bold, overriding the background image rules */
+body .content-box h1,
+body .content-box h2,
+body .content-box h3,
+body .content-box h4,
+body .content-box h5,
+body .content-box h6 {
+    color: #000000 !important;      /* Pure black */
+    font-weight: 700 !important;    /* Bold text */
+    text-shadow: none !important;   /* Removes the white glow/shadow */
+}
+
+body .content-box p,
+body .content-box label {
+    color: #333333 !important;      /* Dark grey for normal text */
+    text-shadow: none !important; 
+}

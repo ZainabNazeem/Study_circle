@@ -47,3 +47,6 @@ if (session_status() === PHP_SESSION_NONE) {
   </div>
 </nav>
 
+<!-- Your navbar/header code ends here -->
+
+<div class="container content-box">
