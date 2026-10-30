@@ -131,7 +131,7 @@ body {
 }
 
 .content-box {
-    background-color: rgba(255, 255, 255, 0.80); /* White box */
+    background-color: rgba(255, 255, 255, 0.50); /* White box */
     border-radius: 15px; /* Rounded corners */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Shadow */
     padding: 30px; /* Space inside the box */
