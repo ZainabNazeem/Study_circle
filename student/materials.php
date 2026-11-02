@@ -70,6 +70,7 @@ include '../includes/header.php';
             <?php echo strlen($desc) > 100 ? "..." : ""; ?>
           </p>
           <a href="view_material.php?id=<?php echo (int)$row['id']; ?>" class="btn btn-primary">View &amp; Rate</a>
+          <a href="download.php?id=<?php echo (int)$row['id']; ?>" class="btn btn-outline-primary">Download</a>
         </div>
       </div>
     <?php } ?>
