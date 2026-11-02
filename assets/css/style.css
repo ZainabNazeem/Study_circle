@@ -293,3 +293,55 @@ body > .container.py-5 > p.text-muted {
   border-radius: 14px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
+/* ===== Page entrance animation ===== */
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-45px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Main heading: drops in from the top, with a soft glow so it stays readable */
+body .content-box h1,
+body > .container h1,
+.hero h1 {
+  color: #0d3b66 !important;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 14px rgba(255, 255, 255, 0.95) !important;
+  animation: dropIn 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* Section headings fade up */
+body .content-box h2,
+body > .container h2 {
+  color: #0d3b66 !important;
+  text-shadow: 0 2px 12px rgba(255, 255, 255, 0.9) !important;
+  animation: fadeUp 0.8s ease 0.5s both;
+}
+
+/* Logo drops in first */
+.hero img,
+.content-box img.logo-box {
+  animation: dropIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* Subtitle and buttons follow one after another */
+body .content-box > p,
+body > .container > p,
+.hero p {
+  color: #1f2d3d !important;
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.9) !important;
+  animation: fadeUp 0.8s ease 0.3s both;
+}
+.hero .btn,
+.content-box .btn-primary {
+  animation: fadeUp 0.8s ease 0.7s both;
+}
+
+/* Cards come in last */
+.dashboard-card,
+.card.h-100 {
+  animation: fadeUp 0.8s ease 0.9s both;
+}
