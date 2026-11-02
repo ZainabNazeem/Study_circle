@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $message = "File size must be 10 MB or less.";
             $message_type = "danger";
         } else {
-            $upload_dir = __DIR__ . "/uploads/";
+            $upload_dir = __DIR__ . "/../uploads/";
 
             if (!is_dir($upload_dir)) {
                 mkdir($upload_dir, 0755, true);
@@ -85,7 +85,10 @@ include "../includes/header.php";
 ?>
 
 <div class="container mt-4">
-    <h2>Upload Notes</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Upload Notes</h2>
+        <a href="my_uploads.php" class="btn btn-outline-primary">My Uploaded Notes</a>
+    </div>
     <p class="text-muted">Share your study materials with other students.</p>
 
     <?php if ($message !== ""): ?>

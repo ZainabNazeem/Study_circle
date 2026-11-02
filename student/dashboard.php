@@ -15,28 +15,34 @@ include "../includes/header.php";
         <h5>Upload Notes</h5>
         <p>Share your study materials.</p>
         <a href="upload.php" class="btn btn-primary">Open</a>
-        <a href="my_uploads.php" class="btn btn-outline-primary mt-2">My Uploaded Notes</a>
       </div>
     </div>
     <div class="col-md-4">
       <div class="card dashboard-card p-3">
         <h5>Download Notes</h5>
         <p>Find materials by subject.</p>
-        <a href="#" class="btn btn-primary">Open</a>
+        <a href="materials.php" class="btn btn-primary">Open</a>
       </div>
     </div>
     <div class="col-md-4">
       <div class="card dashboard-card p-3">
         <h5>Discussion Forum</h5>
         <p>Ask and answer questions.</p>
-        <a href="#" class="btn btn-primary">Open</a>
+        <a href="/studycircle/student/questions.php" class="btn btn-primary">Open</a>
       </div>
     </div>
     <div class="col-md-4">
       <div class="card dashboard-card p-3">
         <h5>Study Groups</h5>
         <p>Create or join a group.</p>
-        <a href="#" class="btn btn-primary">Open</a>
+        <a href="/studycircle/student/groups.php" class="btn btn-primary">Open</a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card dashboard-card p-3">
+        <h5>My Profile</h5>
+        <p>Create and update your profile.</p>
+        <a href="/studycircle/student/profile.php" class="btn btn-primary">Open</a>
       </div>
     </div>
   </div>

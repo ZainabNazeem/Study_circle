@@ -28,14 +28,14 @@ include "../includes/header.php";
       <div class="card dashboard-card p-3">
         <h5>Approve Materials</h5>
         <p>Approve or reject uploaded notes.</p>
-        <a href="#" class="btn btn-primary">Open</a>
+        <a href="approvematerials.php" class="btn btn-primary">Open</a>
       </div>
     </div>
     <div class="col-md-4">
       <div class="card dashboard-card p-3">
         <h5>Moderate Forum</h5>
         <p>Review questions and answers.</p>
-        <a href="#" class="btn btn-primary">Open</a>
+        <a href="/studycircle/admin/moderate_qa.php" class="btn btn-primary">Open</a>
       </div>
     </div>
     <div class="col-md-4">
@@ -43,6 +43,13 @@ include "../includes/header.php";
         <h5>Reports</h5>
         <p>Usage and engagement reports.</p>
         <a href="#" class="btn btn-primary">Open</a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card dashboard-card p-3">
+        <h5>Contact Messages</h5>
+        <p>Read messages sent from the Contact Us page.</p>
+        <a href="/studycircle/admin/messages.php" class="btn btn-primary">Open</a>
       </div>
     </div>
   </div>

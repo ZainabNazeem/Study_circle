@@ -25,6 +25,7 @@ CREATE TABLE materials (
   description TEXT,
   file_name VARCHAR(255) NOT NULL,
   status ENUM('pending','approved','rejected') DEFAULT 'pending',
+  downloads INT DEFAULT 0,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE
@@ -85,6 +86,7 @@ CREATE TABLE study_sessions (
   session_date DATE NOT NULL,
   session_time TIME NOT NULL,
   location VARCHAR(150),
+  meeting_link VARCHAR(500) DEFAULT NULL,
   FOREIGN KEY (group_id) REFERENCES study_groups(id) ON DELETE CASCADE
 );
 

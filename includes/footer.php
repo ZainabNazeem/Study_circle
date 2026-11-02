@@ -1,3 +1,5 @@
+</div> 
+
 <footer class="text-center py-3 mt-5 site-footer">
     <small>&copy; 2026 NSBM StudyCircle</small>
 </footer>
