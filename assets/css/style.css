@@ -167,6 +167,7 @@ body .content-box label {
     color: #333333 !important;      /* Dark grey for normal text */
     text-shadow: none !important; 
 }
+<<<<<<< HEAD
 /*floating navbar*/
 .navbar-nsbm {
   position: sticky;
@@ -265,4 +266,19 @@ body > .container.py-4 > p.text-muted,
 body > .container.py-5 > p.text-muted {
   color: #555555 !important;
   text-shadow: none !important;
+=======
+
+.logout-btn {
+  background-color: white;
+  color: #1a5fa8 !important;
+  padding: 6px 16px !important;
+  border-radius: 20px;
+  font-weight: bold; 
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); 
+>>>>>>> 53a6fab264734b08b44f023c5fb5e898f82d5838
 }

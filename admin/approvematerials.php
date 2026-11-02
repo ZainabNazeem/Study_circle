@@ -26,9 +26,9 @@ if (!in_array($status, $allowed)) {
 }
 $stmt = $conn->prepare(
     "SELECT m.id, m.title, m.file_name, m.created_at,
-            s.name AS subject, u.full_name AS uploader
+            COALESCE(s.name, 'Unknown') AS subject, u.full_name AS uploader
      FROM materials m
-     JOIN subjects s ON m.subject_id = s.id
+     LEFT JOIN subjects s ON m.subject_id = s.id
      JOIN users u ON m.user_id = u.id
      WHERE m.status = ?
      ORDER BY m.created_at DESC"
@@ -72,7 +72,7 @@ include '../includes/header.php';
           <td><?php echo htmlspecialchars($row['uploader']); ?></td>
           <td><?php echo date('Y-m-d', strtotime($row['created_at'])); ?></td>
           <td>
-            <a href="/studycircle/uploads/<?php echo urlencode($row['file_name']); ?>"
+            <a href="/studycircle/uploads/<?php echo rawurlencode($row['file_name']); ?>"
                target="_blank" class="btn btn-outline-secondary btn-sm">View</a>
           </td>
           <td>
