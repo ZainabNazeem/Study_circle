@@ -11,16 +11,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $session_title = trim($_POST['session_title']);
     $session_date = $_POST['session_date'];
     $session_time = $_POST['session_time'];
+    $meeting_link = trim($_POST['meeting_link']);
 
-    if ($group_id > 0 && $session_title != "" && $session_date != "" && $session_time != "") {
-        $stmt = $conn->prepare("INSERT INTO study_sessions (group_id, topic, session_date, session_time) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("isss", $group_id, $session_title, $session_date, $session_time);
+    if ($group_id > 0 && $session_title != "" && $session_date != "" && $session_time != "" && $meeting_link != "") {
 
-        if ($stmt->execute()) {
-            $message = "Study session scheduled successfully!";
-        } else {
-            $message = "Error scheduling session.";
+        // Link must start with http:// or https://
+        if (!filter_var($meeting_link, FILTER_VALIDATE_URL) || !preg_match('/^https?:\/\//i', $meeting_link)) {
+            $message = "Please enter a valid meeting link (starting with https://).";
             $message_type = "danger";
+        } else {
+            $stmt = $conn->prepare("INSERT INTO study_sessions (group_id, topic, session_date, session_time, meeting_link) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("issss", $group_id, $session_title, $session_date, $session_time, $meeting_link);
+
+            if ($stmt->execute()) {
+                $message = "Study session scheduled successfully!";
+            } else {
+                $message = "Error scheduling session.";
+                $message_type = "danger";
+            }
         }
     } else {
         $message = "Please fill in all fields.";
@@ -71,6 +79,13 @@ include "../includes/header.php";
         </div>
       </div>
 
+      <div class="mb-3">
+        <label class="form-label">Meeting Link (Zoom / Google Meet)</label>
+        <input type="url" name="meeting_link" id="meeting_link" class="form-control" placeholder="https://zoom.us/j/123456789" required>
+        <button type="button" class="btn btn-sm mt-2 text-white" style="background-color:#2D8CFF; border-color:#2D8CFF;" onclick="joinMeeting()">Join Meeting</button>
+        <small class="text-muted d-block mt-1">Create the meeting in Zoom or Google Meet, then paste the link here.</small>
+      </div>
+
       <button type="submit" class="btn btn-primary">Schedule Session</button>
       <a href="groups.php" class="btn btn-outline-secondary">Back to Groups</a>
     </form>
@@ -79,11 +94,11 @@ include "../includes/header.php";
   <h3>Scheduled Sessions</h3>
   <table class="table table-bordered table-hover bg-white">
     <thead>
-      <tr><th>Group</th><th>Title</th><th>Date</th><th>Time</th></tr>
+      <tr><th>Group</th><th>Title</th><th>Date</th><th>Time</th><th>Link</th></tr>
     </thead>
     <tbody>
       <?php if ($sessions_result->num_rows == 0) { ?>
-        <tr><td colspan="4" class="text-center">No sessions scheduled yet.</td></tr>
+        <tr><td colspan="5" class="text-center">No sessions scheduled yet.</td></tr>
       <?php } ?>
       <?php while ($session = $sessions_result->fetch_assoc()) { ?>
         <tr>
@@ -91,6 +106,13 @@ include "../includes/header.php";
           <td><?php echo htmlspecialchars($session['topic']); ?></td>
           <td><?php echo $session['session_date']; ?></td>
           <td><?php echo substr($session['session_time'], 0, 5); ?></td>
+          <td>
+            <?php if (!empty($session['meeting_link'])) { ?>
+              <a href="<?php echo htmlspecialchars($session['meeting_link']); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-success">Join</a>
+            <?php } else { ?>
+              -
+            <?php } ?>
+          </td>
         </tr>
       <?php } ?>
     </tbody>
@@ -100,6 +122,16 @@ include "../includes/header.php";
 <script>
 // Do not allow dates in the past
 document.getElementById("session_date").min = new Date().toISOString().split("T")[0];
+
+// Open the pasted meeting link in a new tab
+function joinMeeting() {
+  var link = document.getElementById("meeting_link").value.trim();
+  if (/^https?:\/\//i.test(link)) {
+    window.open(link, "_blank", "noopener");
+  } else {
+    alert("Please paste a valid link starting with https://");
+  }
+}
 </script>
 
 <?php include "../includes/footer.php"; ?>
