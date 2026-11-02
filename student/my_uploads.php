@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_note_id"])) {
             mysqli_stmt_execute($delete_stmt);
 
             if (mysqli_stmt_affected_rows($delete_stmt) === 1) {
-                $file_path = __DIR__ . "/uploads/" . basename($note["file_name"]);
+                $file_path = __DIR__ . "/../uploads/" . basename($note["file_name"]);
 
                 if (is_file($file_path)) {
                     unlink($file_path);
@@ -135,7 +135,7 @@ include "../includes/header.php";
                             </td>
 
                             <td>
-                                <a href="uploads/<?php echo rawurlencode($note["file_name"]); ?>"
+                                <a href="../uploads/<?php echo rawurlencode($note["file_name"]); ?>"
                                    target="_blank" rel="noopener">
                                     View File
                                 </a>
