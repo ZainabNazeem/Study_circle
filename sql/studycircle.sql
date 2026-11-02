@@ -91,3 +91,23 @@ CREATE TABLE study_sessions (
 );
 
 INSERT INTO subjects (name) VALUES ('Web Development'), ('Databases'), ('Programming'), ('Mathematics');
+CREATE TABLE IF NOT EXISTS student_profiles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL UNIQUE,
+    full_name VARCHAR(100) NOT NULL,
+    student_id VARCHAR(30) NOT NULL,
+    degree VARCHAR(100) NOT NULL,
+    academic_year VARCHAR(30) NOT NULL,
+    bio VARCHAR(500),
+    photo VARCHAR(255),
+    phone VARCHAR(20),
+    interests VARCHAR(255),
+    skills VARCHAR(255),
+    profile_link VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_student_profiles_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
