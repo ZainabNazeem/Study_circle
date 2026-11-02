@@ -1,0 +1,15 @@
+CREATE TABLE student_profiles (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL UNIQUE,
+  full_name VARCHAR(100) NOT NULL,
+  student_id VARCHAR(30) NOT NULL,
+  degree VARCHAR(100) NOT NULL,
+  academic_year VARCHAR(20) NOT NULL,
+  bio TEXT,
+  photo VARCHAR(255),
+  phone VARCHAR(20),
+  interests VARCHAR(255),
+  skills VARCHAR(255),
+  profile_link VARCHAR(255),
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
