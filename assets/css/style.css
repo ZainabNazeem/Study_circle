@@ -167,3 +167,17 @@ body .content-box label {
     color: #333333 !important;      /* Dark grey for normal text */
     text-shadow: none !important; 
 }
+
+.logout-btn {
+  background-color: white;
+  color: #1a5fa8 !important;
+  padding: 6px 16px !important;
+  border-radius: 20px;
+  font-weight: bold; 
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); 
+}
