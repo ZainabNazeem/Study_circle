@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $message = "File size must be 10 MB or less.";
             $message_type = "danger";
         } else {
-            $upload_dir = __DIR__ . "/uploads/";
+            $upload_dir = __DIR__ . "/../uploads/";
 
             if (!is_dir($upload_dir)) {
                 mkdir($upload_dir, 0755, true);

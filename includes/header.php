@@ -35,11 +35,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
         <?php } elseif ($_SESSION['role'] == 'admin') { ?>
           <li class="nav-item"><a class="nav-link" href="/studycircle/admin/dashboard.php">Admin Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link" href="/studycircle/auth/logout.php">Logout</a></li>
+          <li class="nav-item"><a class="nav-link logout-btn" href="/studycircle/auth/logout.php">Logout</a></li>
 
         <?php } else { ?>
           <li class="nav-item"><a class="nav-link" href="/studycircle/student/dashboard.php">Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link" href="/studycircle/auth/logout.php">Logout</a></li>
+          <li class="nav-item"><a class="nav-link logout-btn" href="/studycircle/auth/logout.php">Logout</a></li>
         <?php } ?>
 
       </ul>
