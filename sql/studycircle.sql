@@ -86,6 +86,7 @@ CREATE TABLE study_sessions (
   session_date DATE NOT NULL,
   session_time TIME NOT NULL,
   location VARCHAR(150),
+  meeting_link VARCHAR(500) DEFAULT NULL,
   FOREIGN KEY (group_id) REFERENCES study_groups(id) ON DELETE CASCADE
 );
 

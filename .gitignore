@@ -1,3 +1,4 @@
 uploads/*
 !uploads/.gitkeep
 /student/uploads/
+student/uploads/profiles/

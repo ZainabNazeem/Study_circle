@@ -38,6 +38,13 @@ include "../includes/header.php";
         <a href="/studycircle/student/groups.php" class="btn btn-primary">Open</a>
       </div>
     </div>
+    <div class="col-md-4">
+      <div class="card dashboard-card p-3">
+        <h5>My Profile</h5>
+        <p>Create and update your profile.</p>
+        <a href="/studycircle/student/profile.php" class="btn btn-primary">Open</a>
+      </div>
+    </div>
   </div>
 </div>
 
