@@ -111,3 +111,16 @@ CREATE TABLE IF NOT EXISTS student_profiles (
         FOREIGN KEY (user_id) REFERENCES users(id)
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
+CREATE TABLE IF NOT EXISTS academic_events (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    event_type ENUM(
+        'Exam',
+        'Assignment',
+        'Academic Event',
+        'Important Date'
+    ) NOT NULL,
+    event_date DATE NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
