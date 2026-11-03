@@ -42,7 +42,7 @@ include "../includes/header.php";
       <div class="card dashboard-card p-3">
         <h5>Reports</h5>
         <p>Usage and engagement reports.</p>
-        <a href="#" class="btn btn-primary">Open</a>
+        <a href="/studycircle/admin/reports.php" class="btn btn-primary">Open</a>
       </div>
     </div>
     <div class="col-md-4">
