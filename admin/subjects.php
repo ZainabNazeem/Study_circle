@@ -1,3 +1,4 @@
+
 <?php
 include "../includes/auth.php";
 include "../config/db.php";
@@ -46,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// If ?edit=ID is in the URL, load that subject into the edit form
+// Load subject for editing
 $editSubject = null;
 if (isset($_GET['edit'])) {
     $editId = (int)$_GET['edit'];
@@ -62,82 +63,139 @@ $subjects = mysqli_query($conn, "SELECT id, name FROM subjects ORDER BY name");
 $page_title = "Manage Subjects - StudyCircle";
 include "../includes/header.php";
 ?>
+
 <style>
-  .admin-card { border-top: 4px solid var(--nsbm-green); }
+  .admin-card {
+    border-top: 4px solid var(--nsbm-green);
+  }
 </style>
 
 <div class="container py-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
+
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
     <h2 class="mb-0">Manage Subjects</h2>
+
     <div>
       <a href="users.php" class="btn btn-outline-primary btn-sm">Manage Users</a>
       <a href="dashboard.php" class="btn btn-outline-secondary btn-sm">Back to Dashboard</a>
     </div>
   </div>
 
+  <!-- Academic Calendar Button -->
+  <div class="card admin-card mb-4">
+    <div class="card-body d-flex justify-content-between align-items-center flex-wrap gap-2">
+      <div>
+        <h5 class="mb-1">Academic Calendar</h5>
+        <p class="text-muted mb-0">Manage exams, assignments and academic events.</p>
+      </div>
+
+      <a href="/studycircle/admin/calendar.php" class="btn btn-success">
+        Manage Academic Calendar
+      </a>
+    </div>
+  </div>
+
   <?php if ($message): ?>
-    <div class="alert alert-<?php echo $messageType; ?>"><?php echo htmlspecialchars($message); ?></div>
+    <div class="alert alert-<?php echo $messageType; ?>">
+      <?php echo htmlspecialchars($message); ?>
+    </div>
   <?php endif; ?>
 
+  <!-- Add / Edit Subject -->
   <div class="card admin-card mb-4">
     <div class="card-body">
+
       <?php if ($editSubject): ?>
+
         <h5 class="card-title">Edit subject</h5>
+
         <form method="post" action="subjects.php" class="row g-2">
           <input type="hidden" name="action" value="update">
           <input type="hidden" name="id" value="<?php echo (int)$editSubject['id']; ?>">
+
           <div class="col-md-8">
             <input type="text" name="name" class="form-control"
                    value="<?php echo htmlspecialchars($editSubject['name']); ?>" required>
           </div>
+
           <div class="col-md-4">
             <button type="submit" class="btn btn-primary">Save</button>
             <a href="subjects.php" class="btn btn-outline-secondary">Cancel</a>
           </div>
         </form>
+
       <?php else: ?>
+
         <h5 class="card-title">Add subject</h5>
+
         <form method="post" action="subjects.php" class="row g-2">
           <input type="hidden" name="action" value="add">
+
           <div class="col-md-8">
-            <input type="text" name="name" class="form-control" placeholder="e.g. Web Development" required>
+            <input type="text" name="name" class="form-control"
+                   placeholder="e.g. Web Development" required>
           </div>
+
           <div class="col-md-4">
             <button type="submit" class="btn btn-primary">Add</button>
           </div>
         </form>
+
       <?php endif; ?>
+
     </div>
   </div>
 
+  <!-- Subjects List -->
   <div class="card admin-card">
     <div class="card-body">
+
       <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
+
           <thead>
-            <tr><th>ID</th><th>Name</th><th>Actions</th></tr>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Actions</th>
+            </tr>
           </thead>
+
           <tbody>
             <?php while ($s = mysqli_fetch_assoc($subjects)): ?>
+
               <tr>
                 <td><?php echo (int)$s['id']; ?></td>
+
                 <td><?php echo htmlspecialchars($s['name']); ?></td>
+
                 <td>
-                  <a href="subjects.php?edit=<?php echo (int)$s['id']; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
+                  <a href="subjects.php?edit=<?php echo (int)$s['id']; ?>"
+                     class="btn btn-sm btn-outline-primary">Edit</a>
+
                   <form method="post" action="subjects.php" class="d-inline"
                         onsubmit="return confirm('Delete this subject? Notes and questions under it will also be deleted.');">
+
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="id" value="<?php echo (int)$s['id']; ?>">
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                      Delete
+                    </button>
+
                   </form>
                 </td>
               </tr>
+
             <?php endwhile; ?>
           </tbody>
+
         </table>
       </div>
+
     </div>
   </div>
+
 </div>
 
 <?php include "../includes/footer.php"; ?>
