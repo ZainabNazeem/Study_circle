@@ -11,10 +11,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $current = $_POST['current'] ?? 'pending';
 
     if ($action == 'approved' || $action == 'rejected') {
+        
         $stmt = $conn->prepare("UPDATE materials SET status = ? WHERE id = ?");
         $stmt->bind_param("si", $action, $id);
         $stmt->execute();
+
+    } elseif ($action == 'delete') {
+        // 1. Find the file name first
+        $stmt = $conn->prepare("SELECT file_name FROM materials WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $material = $stmt->get_result()->fetch_assoc();
+
+        if ($material) {
+            // 2. Delete the database row
+            $del = $conn->prepare("DELETE FROM materials WHERE id = ?");
+            $del->bind_param("i", $id);
+            $del->execute();
+
+            // 3. Delete the file from the uploads folder, if it exists
+            $file = __DIR__ . '/../uploads/' . basename($material['file_name']);
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
     }
+
     header("Location: approvematerials.php?status=" . urlencode($current));
     exit;
 }
@@ -85,6 +107,12 @@ include '../includes/header.php';
               <?php if ($status != 'rejected') { ?>
                 <button name="action" value="rejected" class="btn btn-danger btn-sm" onclick="return confirm('Reject this material?');">Reject</button>
               <?php } ?>
+              <button name="action" value="delete" class="btn btn-outline-danger btn-sm"
+                onclick="return confirm('Delete this material permanently? This also removes its file, ratings and comments.');">
+                Delete
+              </button>
+
+
             </form>
           </td>
         </tr>
