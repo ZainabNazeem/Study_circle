@@ -135,8 +135,7 @@ include "../includes/header.php";
                             </td>
 
                             <td>
-                                <a href="../uploads/<?php echo rawurlencode($note["file_name"]); ?>"
-                                   target="_blank" rel="noopener">
+                                <a href="../uploads/<?php echo rawurlencode($note["file_name"]); ?>" target="_blank" rel="noopener">
                                     View File
                                 </a>
                             </td>
