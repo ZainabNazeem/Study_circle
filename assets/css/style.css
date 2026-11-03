@@ -178,57 +178,62 @@ body .content-box label {
   border-bottom: none;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
+
 .content-box {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 18px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
   animation: floatIn 0.5s ease backwards;
 }
+
 .card {
-  border-radius: 16px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
+
 .dashboard-card:hover,
 .card.h-100:hover {
   transform: translateY(-6px);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
 }
+
 /*Rounded buttons*/
 .btn {
   border-radius: 50px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
 }
+
 .form-control,
 .form-select {
   border-radius: 12px;
   border: 1px solid #d5dde5;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
+
 .form-control:focus,
 .form-select:focus {
   border-color: var(--nsbm-green);
   box-shadow: 0 0 0 4px rgba(60, 180, 75, 0.2);
 }
+
 .table {
   background: #ffffff;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 }
+
 @keyframes floatIn {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: none; }
 }
+
 @keyframes bob {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-8px); }
 }
+
 .float-anim {
   animation: bob 3s ease-in-out infinite;
 }
@@ -242,16 +247,14 @@ body > .container.mt-4,
 body > .container.mt-5,
 body > .container.py-4,
 body > .container.py-5 {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.50);
   border-radius: 18px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
   padding: 28px;
   margin-bottom: 30px;
   animation: floatIn 0.5s ease backwards;
 }
+
 body > .container.mt-4 h1, body > .container.mt-4 h2, body > .container.mt-4 h3,
 body > .container.mt-5 h1, body > .container.mt-5 h2, body > .container.mt-5 h3,
 body > .container.py-4 h1, body > .container.py-4 h2, body > .container.py-4 h3,
@@ -338,4 +341,18 @@ body > .container > p,
 /*to off animation who don't like it*/
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
+}
+
+/* ==========================================
+   STABLE FLOATING FOOTER (MATCHES NAVBAR)
+   ========================================== */
+.site-footer {
+    position: sticky !important;
+    bottom: 20px !important; /* Keeps it floating 20px from the bottom */
+    z-index: 999 !important; /* Ensures it stays on top of content */
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    border-radius: 14px !important; 
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important; 
+    background-color: var(--nsbm-blue) !important; 
 }
