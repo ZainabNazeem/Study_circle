@@ -1,3 +1,4 @@
+
 <?php
 include "../includes/auth.php";
 requireLogin();
@@ -10,34 +11,8 @@ include "../includes/header.php";
   <p class="text-muted">What would you like to do today?</p>
 
   <div class="row g-3 mt-2">
-    <div class="col-md-4">
-      <div class="card dashboard-card p-3">
-        <h5>Upload Notes</h5>
-        <p>Share your study materials.</p>
-        <a href="upload.php" class="btn btn-primary">Open</a>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card dashboard-card p-3">
-        <h5>Download Notes</h5>
-        <p>Find materials by subject.</p>
-        <a href="materials.php" class="btn btn-primary">Open</a>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card dashboard-card p-3">
-        <h5>Discussion Forum</h5>
-        <p>Ask and answer questions.</p>
-        <a href="/studycircle/student/questions.php" class="btn btn-primary">Open</a>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card dashboard-card p-3">
-        <h5>Study Groups</h5>
-        <p>Create or join a group.</p>
-        <a href="/studycircle/student/groups.php" class="btn btn-primary">Open</a>
-      </div>
-    </div>
+
+    <!-- 1. My Profile -->
     <div class="col-md-4">
       <div class="card dashboard-card p-3">
         <h5>My Profile</h5>
@@ -45,6 +20,52 @@ include "../includes/header.php";
         <a href="/studycircle/student/profile.php" class="btn btn-primary">Open</a>
       </div>
     </div>
+
+    <!-- 2. Upload Notes -->
+    <div class="col-md-4">
+      <div class="card dashboard-card p-3">
+        <h5>Upload Notes</h5>
+        <p>Share your study materials.</p>
+        <a href="upload.php" class="btn btn-primary">Open</a>
+      </div>
+    </div>
+
+    <!-- 3. Download Notes -->
+    <div class="col-md-4">
+      <div class="card dashboard-card p-3">
+        <h5>Download Notes</h5>
+        <p>Find materials by subject.</p>
+        <a href="materials.php" class="btn btn-primary">Open</a>
+      </div>
+    </div>
+
+    <!-- 4. Discussion Forum -->
+    <div class="col-md-4">
+      <div class="card dashboard-card p-3">
+        <h5>Discussion Forum</h5>
+        <p>Ask and answer questions.</p>
+        <a href="/studycircle/student/questions.php" class="btn btn-primary">Open</a>
+      </div>
+    </div>
+
+    <!-- 5. Study Groups -->
+    <div class="col-md-4">
+      <div class="card dashboard-card p-3">
+        <h5>Study Groups</h5>
+        <p>Create or join a group.</p>
+        <a href="/studycircle/student/groups.php" class="btn btn-primary">Open</a>
+      </div>
+    </div>
+
+    <!-- 6. Academic Calendar -->
+    <div class="col-md-4">
+      <div class="card dashboard-card p-3">
+        <h5>Academic Calendar</h5>
+        <p>View upcoming exams, assignments and events.</p>
+        <a href="/studycircle/student/calendar.php" class="btn btn-primary">Open</a>
+      </div>
+    </div>
+
   </div>
 </div>
 
