@@ -124,3 +124,34 @@ CREATE TABLE IF NOT EXISTS academic_events (
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+INSERT INTO academic_events
+(title, event_type, event_date, description)
+SELECT 'Sample Exam', 'Exam', '2026-11-10', 'Demo exam event'
+WHERE NOT EXISTS (
+    SELECT 1 FROM academic_events
+    WHERE title = 'Sample Exam'
+);
+
+INSERT INTO academic_events
+(title, event_type, event_date, description)
+SELECT 'Sample Assignment', 'Assignment', '2026-11-15', 'Demo assignment deadline'
+WHERE NOT EXISTS (
+    SELECT 1 FROM academic_events
+    WHERE title = 'Sample Assignment'
+);
+
+INSERT INTO academic_events
+(title, event_type, event_date, description)
+SELECT 'Sample Academic Event', 'Academic Event', '2026-11-20', 'Demo academic event'
+WHERE NOT EXISTS (
+    SELECT 1 FROM academic_events
+    WHERE title = 'Sample Academic Event'
+);
+
+INSERT INTO academic_events
+(title, event_type, event_date, description)
+SELECT 'Semester Registration Deadline', 'Important Date', '2026-11-25', 'Last date for semester registration'
+WHERE NOT EXISTS (
+    SELECT 1 FROM academic_events
+    WHERE title = 'Semester Registration Deadline'
+);
