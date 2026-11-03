@@ -8,6 +8,7 @@ require_once "../config/db.php";
 $page_title = "My Uploaded Notes";
 $user_id = (int)$_SESSION["user_id"];
 
+// CSRF protection
 if (empty($_SESSION["csrf_token"])) {
     $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
 }
@@ -27,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_note_id"])) {
     } else {
         $note_id = (int)$_POST["delete_note_id"];
 
-        // Check that this note belongs to the logged-in student
         $check_stmt = mysqli_prepare(
             $conn,
             "SELECT file_name, status FROM materials
@@ -36,18 +36,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_note_id"])) {
 
         mysqli_stmt_bind_param($check_stmt, "ii", $note_id, $user_id);
         mysqli_stmt_execute($check_stmt);
+
         $check_result = mysqli_stmt_get_result($check_stmt);
         $note = mysqli_fetch_assoc($check_result);
+
         mysqli_stmt_close($check_stmt);
 
         if (!$note) {
             $message = "Note not found.";
             $message_type = "danger";
+
         } elseif ($note["status"] === "approved") {
             $message = "Approved notes cannot be deleted.";
             $message_type = "danger";
+
         } else {
-            // Delete only this student's non-approved note
             $delete_stmt = mysqli_prepare(
                 $conn,
                 "DELETE FROM materials
@@ -58,6 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_note_id"])) {
             mysqli_stmt_execute($delete_stmt);
 
             if (mysqli_stmt_affected_rows($delete_stmt) === 1) {
+
                 $file_path = __DIR__ . "/../uploads/" . basename($note["file_name"]);
 
                 if (is_file($file_path)) {
@@ -66,6 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_note_id"])) {
 
                 $message = "Note deleted successfully!";
                 $message_type = "success";
+
             } else {
                 $message = "Could not delete the note. Please try again.";
                 $message_type = "danger";
@@ -90,26 +95,36 @@ $stmt = mysqli_prepare(
 
 mysqli_stmt_bind_param($stmt, "i", $user_id);
 mysqli_stmt_execute($stmt);
+
 $result = mysqli_stmt_get_result($stmt);
 
 include "../includes/header.php";
 ?>
 
 <div class="container mt-4">
+
     <h2>My Uploaded Notes</h2>
-    <p class="text-muted">View the study materials you have uploaded.</p>
 
-    <a href="upload.php" class="btn btn-primary mb-3">Upload New Notes</a>
+    <p class="text-muted">
+        View the study materials you have uploaded.
+    </p>
 
-    <?php if ($message !== ""): ?>
+    <a href="upload.php" class="btn btn-primary mb-3">
+        Upload New Notes
+    </a>
+
+    <?php if (!empty($message)): ?>
         <div class="alert alert-<?php echo htmlspecialchars($message_type); ?>">
             <?php echo htmlspecialchars($message); ?>
         </div>
     <?php endif; ?>
 
     <?php if (mysqli_num_rows($result) > 0): ?>
+
         <div class="table-responsive">
+
             <table class="table table-bordered table-striped">
+
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -121,10 +136,16 @@ include "../includes/header.php";
                         <th>Action</th>
                     </tr>
                 </thead>
+
                 <tbody>
+
                     <?php while ($note = mysqli_fetch_assoc($result)): ?>
+
                         <tr>
-                            <td><?php echo htmlspecialchars($note["title"]); ?></td>
+
+                            <td>
+                                <?php echo htmlspecialchars($note["title"]); ?>
+                            </td>
 
                             <td>
                                 <?php echo htmlspecialchars($note["subject_name"] ?? "Unknown"); ?>
@@ -159,10 +180,13 @@ include "../includes/header.php";
                                 </span>
                             </td>
 
-                            <td><?php echo htmlspecialchars($note["created_at"]); ?></td>
+                            <td>
+                                <?php echo htmlspecialchars($note["created_at"]); ?>
+                            </td>
 
                             <td>
-                                <?php if ($status !== "approved"): ?>
+                                <?php if ($note["status"] !== "approved"): ?>
+
                                     <form method="POST"
                                           onsubmit="return confirm('Are you sure you want to delete this note?');">
 
@@ -177,23 +201,38 @@ include "../includes/header.php";
                                         <button type="submit" class="btn btn-danger btn-sm">
                                             Delete
                                         </button>
+
                                     </form>
+
                                 <?php else: ?>
+
                                     <span class="text-muted">Not allowed</span>
+
                                 <?php endif; ?>
                             </td>
+
                         </tr>
+
                     <?php endwhile; ?>
+
                 </tbody>
+
             </table>
+
         </div>
+
     <?php else: ?>
+
         <div class="alert alert-info">
             You have not uploaded any notes yet.
         </div>
+
     <?php endif; ?>
 
-    <a href="dashboard.php" class="btn btn-secondary">Back to Dashboard</a>
+    <a href="dashboard.php" class="btn btn-secondary">
+        Back to Dashboard
+    </a>
+
 </div>
 
 <?php
