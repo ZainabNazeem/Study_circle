@@ -69,9 +69,14 @@ include "../includes/header.php";
 <div class="container py-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h2 class="mb-0">Manage Subjects</h2>
+    
+    <!-- All buttons grouped together on the right -->
     <div>
-      <a href="users.php" class="btn btn-outline-primary btn-sm">Manage Users</a>
-      <a href="dashboard.php" class="btn btn-outline-secondary btn-sm">Back to Dashboard</a>
+        <a href="manage_calendar.php" class="btn btn-primary btn-sm">
+            📅 Manage Academic Calendar
+        </a>
+        <a href="users.php" class="btn btn-outline-primary btn-sm">Manage Users</a>
+        <a href="dashboard.php" class="btn btn-outline-secondary btn-sm">Back to Dashboard</a>
     </div>
   </div>
 
