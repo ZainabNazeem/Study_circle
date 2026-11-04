@@ -40,7 +40,13 @@ include "../includes/header.php";
 ?>
 
 <div class="container mt-4">
-  <h2>Moderate Questions and Answers</h2>
+  <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+  <h2 class="mb-0">Moderate Questions and Answers</h2>
+   <div  class="d-flex flex-wrap gap-2">
+      <a href="users.php" class="btn btn-outline-primary btn-sm">Manage Users</a>
+      <a href="dashboard.php" class="btn btn-outline-secondary btn-sm">Back to Dashboard</a>
+    </div>
+  </div>
 
   <h4 class="mt-4">Questions</h4>
   <table class="table table-bordered table-hover bg-white">
