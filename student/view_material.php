@@ -69,7 +69,7 @@ $reviews = $review_stmt->get_result();
     
     <!-- FIXED BUG: Changed file_path to file_name and added uploads/ folder -->
     <?php if(!empty($m['file_name'])): ?>
-        <a href="../uploads/<?php echo rawurlencode($m['file_name']); ?>" target="_blank" rel="noopener" class="btn btn-success">Download / Open File</a>
+         <a href="download.php?id=<?php echo (int)$m['id']; ?>" class="btn btn-success">Download File</a>
     <?php endif; ?>
     
     <hr>
