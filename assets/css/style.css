@@ -63,9 +63,7 @@ a {
 .hero {
   padding: 50px 0 30px 0;
 }
-.site-footer{
-  margin-top:auto !important;
-}
+
 body{
   min-height: 100vh;
   display: flex;
@@ -352,7 +350,56 @@ body > .container > p,
     z-index: 999 !important; /* Ensures it stays on top of content */
     margin-left: 20px !important;
     margin-right: 20px !important;
+    margin-top: 15px !important;
     border-radius: 14px !important; 
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important; 
     background-color: var(--nsbm-blue) !important; 
+}
+
+/* ==========================================
+   LOCK HEADER & FOOTER, SCROLL ONLY CONTENT
+   ========================================== */
+
+/* 1. Lock the body to the screen height and stop it from scrolling */
+body {
+    height: 100vh !important;
+    overflow: hidden !important; /* Stops the whole page from scrolling */
+    display: flex !important;
+    flex-direction: column !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 2. Make sure the header doesn't shrink */
+.navbar-nsbm {
+    flex-shrink: 0 !important;
+}
+
+/* 3. Make the middle content box scrollable AND rounded */
+.content-box {
+    flex-grow: 1 !important; 
+    overflow-y: auto !important; 
+    
+    /* Force it to center and leave gaps on all sides */
+    width: 95% !important; 
+    max-width: 1400px !important;
+    margin: 15px auto 20px auto !important; 
+    
+    /* Force the rounded corners and padding */
+    border-radius: 15px !important; 
+    border: none !important;
+    padding: 30px !important;
+}
+
+/* 4. Fix the scrollbar */
+.content-box::-webkit-scrollbar {
+    width: 8px;
+}
+.content-box::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+.content-box::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 10px; 
 }
