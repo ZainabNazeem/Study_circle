@@ -64,7 +64,13 @@ include '../includes/header.php';
 ?>
 
 <div class="container mt-4">
-  <h2>Manage Study Materials</h2>
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <h2 class="mb-0">Manage Study Materials</h2>
+    <div class="d-flex flex-wrap gap-2">
+      <a href="users.php" class="btn btn-outline-primary btn-sm">Manage Users</a>
+      <a href="dashboard.php" class="btn btn-outline-secondary btn-sm">Back to Dashboard</a>
+    </div>
+  </div>
 
   <ul class="nav nav-tabs mb-3">
     <?php foreach ($allowed as $tab) { ?>
